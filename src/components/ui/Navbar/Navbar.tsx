@@ -24,7 +24,7 @@ const Navbar = ({
     <Layout>
       <Header style={{ display: "flex", alignItems: "center" }}>
         <Content>
-          <Title level={3} style={{ color: "white", marginTop: "2px" }}>
+          <Title level={3} className="text-white p-2 m-2">
             Doctors Portal
           </Title>
         </Content>

@@ -3,6 +3,7 @@ import "./globals.css";
 import React from "react";
 import Providers from "@/lib/Providers";
 import Navbar from "@/components/ui/Navbar/Navbar";
+import "tailwindcss/tailwind.css";
 
 export const metadata: Metadata = {
   title: "Home Page",
