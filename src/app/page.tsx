@@ -1,7 +1,8 @@
+import { Button } from "antd";
 import React from "react";
 
 const HomePage = () => {
-  return <div className="text-red-900 text-2xl">HomePage </div>;
+  return <div></div>;
 };
 
 export default HomePage;

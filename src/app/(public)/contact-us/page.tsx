@@ -1,7 +1,7 @@
 import React from "react";
 
 const PublicContactUs = () => {
-  return <div>PublicContactUs Components</div>;
+  return <div>Public ContactUs Components</div>;
 };
 
 export default PublicContactUs;
