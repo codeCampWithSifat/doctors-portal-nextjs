@@ -1,5 +1,7 @@
 "use client";
-import { Layout, Menu } from "antd";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { onSidebarClose } from "@/redux/slices/sidebarSlice";
+import { Drawer, Layout, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
 import Link from "next/link";
@@ -14,11 +16,13 @@ const Sidebar = ({
   items: { key: string; label: string; href: string }[];
 }) => {
   const pathname = usePathname();
+  const open = useAppSelector((state) => state.sidebar.open);
+  const dispatch = useAppDispatch();
   return (
     <Layout className="flex-row">
-      <Sider width={250} className="min-h-screen bg-gray-300">
+      <Sider width={250} className="min-h-screen bg-gray-300 lg:block hidden">
         <Menu
-          className="bg-transparent px-3 py-1"
+          className="bg-transparent px-3 py-1 "
           disabledOverflow
           theme="light"
           mode="inline"
@@ -34,6 +38,30 @@ const Sidebar = ({
         </Menu>
       </Sider>
       <Content className="bg-white p-4">{children}</Content>
+
+      <Drawer
+        className="lg:hidden"
+        title="Menu"
+        onClose={() => dispatch(onSidebarClose())}
+        open={open}
+        placement="left"
+      >
+        <Menu
+          disabledOverflow
+          theme="light"
+          mode="vertical"
+          //   defaultSelectedKeys={["2"]}
+          selectedKeys={[items.find((item) => item.href === pathname)?.key!]}
+        >
+          {items?.map((item) => {
+            return (
+              <Menu.Item key={item.key}>
+                <Link href={item.href}>{item.label}</Link>
+              </Menu.Item>
+            );
+          })}
+        </Menu>
+      </Drawer>
     </Layout>
   );
 };

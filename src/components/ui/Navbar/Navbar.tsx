@@ -8,6 +8,8 @@ import { Content } from "antd/es/layout/layout";
 import Title from "antd/es/typography/Title";
 import { MenuOutlined } from "@ant-design/icons";
 import { Drawer } from "antd";
+import { useAppDispatch } from "@/redux/hooks";
+import { showSidebarDrawer } from "@/redux/slices/sidebarSlice";
 
 const { Header } = Layout;
 
@@ -16,7 +18,6 @@ const Navbar = ({
 }: {
   items: { key: string; label: string; href: string }[];
 }) => {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -26,12 +27,21 @@ const Navbar = ({
   const onClose = () => {
     setOpen(false);
   };
+  const pathname = usePathname();
+  const dispatch = useAppDispatch();
   return (
-    <Layout>
-      <Header style={{ display: "flex", alignItems: "center" }}>
-        <Content>
+    <Layout className="layout">
+      <Header className="flex items-center">
+        <Content className="flex">
+          <Button
+            onClick={() => dispatch(showSidebarDrawer())}
+            type="primary"
+            className="lg:hidden mx-3 mt-2"
+          >
+            <MenuOutlined />
+          </Button>
           <Link href={"/"}>
-            <Title level={3} className="text-white ">
+            <Title level={3} className="text-white">
               Doctors Portal
             </Title>
           </Link>
