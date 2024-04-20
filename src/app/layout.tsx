@@ -4,6 +4,7 @@ import React from "react";
 import Providers from "@/lib/Providers";
 import Navbar from "@/components/ui/Navbar/Navbar";
 import "tailwindcss/tailwind.css";
+import FooterComponent from "@/components/ui/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Home Page",
@@ -15,17 +16,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const items = [
-    { key: "1", label: "Home", href: "/" },
-    { key: "2", label: "About", href: "/about-us" },
-    { key: "3", label: "Contact", href: "/contact-us" },
-  ];
   return (
     <html lang="en">
       <Providers>
         <body>
-          <Navbar items={items} />
           {children}
+          <FooterComponent />
         </body>
       </Providers>
     </html>

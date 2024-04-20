@@ -1,12 +1,13 @@
 import PublicHeader from "@/components/view/Header/PublicHeader";
 import React from "react";
 
-const HomePage = () => {
+const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <PublicHeader />
+      {children}
     </div>
   );
 };
 
-export default HomePage;
+export default PublicLayout;
