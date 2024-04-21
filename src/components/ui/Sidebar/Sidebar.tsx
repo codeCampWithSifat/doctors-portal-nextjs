@@ -41,7 +41,7 @@ const Sidebar = ({
 
       <Drawer
         className="lg:hidden"
-        title="Menu"
+        title="Side Bar"
         onClose={() => dispatch(onSidebarClose())}
         open={open}
         placement="left"
