@@ -68,7 +68,7 @@ const Navbar = ({
 
         <Drawer
           className="lg:hidden"
-          title="Menu"
+          title="Menus"
           onClose={onClose}
           open={open}
         >
