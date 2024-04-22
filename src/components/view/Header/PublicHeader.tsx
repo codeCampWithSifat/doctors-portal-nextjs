@@ -4,8 +4,9 @@ import React from "react";
 const PublicHeader = () => {
   const items = [
     { key: "1", label: "Home", href: "/" },
-    { key: "2", label: "About", href: "/about-us" },
-    { key: "3", label: "Contact", href: "/contact-us" },
+    { key: "2", label: "Services", href: "/services" },
+    { key: "4", label: "Contact", href: "/contact-us" },
+    { key: "5", label: "About", href: "/about-us" },
   ];
   return (
     <div>
