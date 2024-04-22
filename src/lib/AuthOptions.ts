@@ -28,7 +28,7 @@ export const authOptions: AuthOptions = {
             data?.accessToken,
             process.env.JWT_SECRET!
           );
-          console.log(verifiedToken, "verified Token Inside");
+          //   console.log(verifiedToken, "verified Token Inside");
 
           return {
             ...data,
@@ -65,4 +65,7 @@ export const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+  },
 };
