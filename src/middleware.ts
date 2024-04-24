@@ -16,7 +16,7 @@ const patientsAccessRoutes = [
 const rolesRedirect: Record<string, unknown> = {
   doctor: "http://localhost:3000/doctors/dashboard",
   patient: "http://localhost:3000/dashboard",
-  admins: "http://localhost:3000/admins/dashboard",
+  admin: "http://localhost:3000/admins/dashboard",
 };
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
@@ -31,8 +31,8 @@ export async function middleware(request: NextRequest) {
   const role = token?.role as string;
   if (
     (role === "admin" && pathname.startsWith("/admins")) ||
-    (role === "patient" && patientsAccessRoutes.includes(pathname)) ||
-    (role === "doctor" && pathname.startsWith("/doctors"))
+    (role === "doctor" && pathname.startsWith("/doctors")) ||
+    (role === "patient" && patientsAccessRoutes.includes(pathname))
   ) {
     return NextResponse.next();
   }
@@ -40,11 +40,14 @@ export async function middleware(request: NextRequest) {
   if (pathname === "/" && role && role in rolesRedirect) {
     return NextResponse.redirect(rolesRedirect[role] as string);
   }
+
+  return NextResponse.redirect("http://localhost:3000");
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
   matcher: [
+    // hybried routes
     "/",
     "/login",
     "/register",
@@ -57,5 +60,7 @@ export const config = {
     "/payment-history",
     // doctor routes
     "/doctors/:page*",
+    // admins routes
+    "/admins/:page*",
   ],
 };

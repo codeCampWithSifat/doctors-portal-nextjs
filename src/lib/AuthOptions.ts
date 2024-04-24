@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { AuthOptions } from "next-auth";
 import { jwtHelpers } from "@/helpers/jwtHelpers";
+import { getNewAccessToken } from "@/services/getNewAccessToken";
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
@@ -28,29 +29,37 @@ export const authOptions: AuthOptions = {
             data?.accessToken,
             process.env.JWT_SECRET!
           );
-          //   console.log(verifiedToken, "verified Token Inside");
 
-          return {
-            ...data,
-            ...verifiedToken,
-          };
-        } catch (error) {
-          //   console.log(error);
-          return null;
+          if (res.ok && data) {
+            return {
+              ...data,
+              ...verifiedToken,
+            };
+          }
+        } catch (error: any) {
+          throw new Error(error.message);
         }
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      //   console.log(token, "Auth Token");
-      //   console.log(user, "Auth User");
       return {
         ...token,
         ...user,
       };
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: any }) {
+      const verifiedToken = jwtHelpers.verifyToken(
+        token?.accessToken,
+        process.env.JWT_SECRET!
+      );
+
+      if (!verifiedToken) {
+        // console.log("Token Expired New Token Generated");
+        const { data } = await getNewAccessToken(token?.accessToken);
+        token.accessToken = data?.accessToken;
+      }
       return {
         ...session,
         ...token,
@@ -67,5 +76,6 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
+    error: "/",
   },
 };

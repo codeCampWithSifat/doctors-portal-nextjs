@@ -10,6 +10,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import { Drawer } from "antd";
 import { useAppDispatch } from "@/redux/hooks";
 import { showSidebarDrawer } from "@/redux/slices/sidebarSlice";
+import { signOut, useSession } from "next-auth/react";
 
 const { Header } = Layout;
 
@@ -29,6 +30,8 @@ const Navbar = ({
   };
   const pathname = usePathname();
   const dispatch = useAppDispatch();
+  const session = useSession();
+  // console.log(session, "Navbar Session");
   return (
     <Layout className="layout">
       <Header className="flex items-center">
@@ -61,6 +64,13 @@ const Navbar = ({
               </Menu.Item>
             );
           })}
+          {session.status === "authenticated" ? (
+            <Button type="primary" onClick={() => signOut()}>
+              Logout
+            </Button>
+          ) : (
+            <Button type="primary">Login</Button>
+          )}
         </Menu>
         <Button onClick={showDrawer} type="primary" className="lg:hidden">
           <MenuOutlined />
@@ -86,6 +96,11 @@ const Navbar = ({
                 </Menu.Item>
               );
             })}
+            {session.status === "authenticated" ? (
+              <Button type="primary">Logout</Button>
+            ) : (
+              <Button>Login</Button>
+            )}
           </Menu>
         </Drawer>
       </Header>
